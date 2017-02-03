@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Overwatch Stats</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  </head>
+  <body>
+    <form id="form">
+      <select name="platform">
+        <option value="pc">PC</option>
+        <option value="xbox">Xbox</option>
+        <option value="playstation">PlayStation</option>
+      </select>
+      <input id="user" type="text" value="Battletag/Gamertag/PSN ID">
+      <select name="gametype">
+        <option value="pc">All</option>
+        <option value="xbox">Competitive</option>
+        <option value="playstation">Quick</option>
+      </select>
+      <select name="Character">
+        <option value="Genji">All</option>
+        <option value="">Ana</option>
+        <option value="">Bastion</option>
+        <option value="">D.Va</option>
+        <option value="Genji">Genji</option>
+        <option value="">Hanzo</option>
+        <option value="">Junkrat</option>
+        <option value="">Lucio</option>
+        <option value="McCree">McCree</option>
+        <option value="">Mei</option>
+        <option value="">Mercy</option>
+        <option value="">Pharah</option>
+        <option value="">Reaper</option>
+        <option value="">Reinhardt</option>
+        <option value="">Soldier:76</option>
+        <option value="">Sombra</option>
+        <option value="">Symmetra</option>
+        <option value="">Winston</option>
+        <option value="">Zarya</option>
+        <option value="">Zenyatta</option>
+      </select>
+      <button onclick="apiRequest()">Submit</button>
+    <form>
+    <p id="data"></p>
+  </body>
+  <script>
+    function apiRequest() {
+      let user = $('#user').val()
+      $.ajax({
+	      url: `https://owapi.net/api/v3/u/${user}/blob?platform=xbl`,
+        data: {
+  	       format: 'json'
+        },
+        success: function(data) {
+  	      let rank = (data.any.stats.competitive.overall_stats.comprank).toString()
+          console.log(data)
+  	      $('#data').html(rank)
+        },
+        crossDomain: true,
+        type: 'GET'
+      })
+    }
+
+    $("#form").submit(function(e) {
+    e.preventDefault();
+    })
+  </script>
+</html>
